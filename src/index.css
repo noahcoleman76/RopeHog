@@ -1,0 +1,82 @@
+:root {
+  --bg: #efe5d6;
+  --surface: #f9f4ec;
+  --surface-alt: rgba(34, 61, 64, 0.08);
+  --border: rgba(34, 61, 64, 0.12);
+  --border-strong: rgba(34, 61, 64, 0.22);
+  --ink: #425350;
+  --ink-soft: #667774;
+  --ink-strong: #193234;
+  --accent: #d78235;
+  --accent-deep: #8b4d1a;
+  --font-body: 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-heading: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top, rgba(255, 250, 239, 0.72), transparent 36%),
+    linear-gradient(180deg, #e7dbc7 0%, #efe5d6 30%, #e3d7c5 100%);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+a,
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-heading);
+  color: var(--ink-strong);
+  line-height: 0.98;
+}
+
+h1 {
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-size: 1.35rem;
+}
+
+p {
+  margin: 0;
+}
