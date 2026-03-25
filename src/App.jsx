@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import heroImage from './assets/hero.png'
 import './App.css'
 
 const pages = [
@@ -14,14 +13,17 @@ const homeHighlights = [
   {
     title: 'Your Time',
     text: 'Consistent repetitive runs in a fraction of the time it takes to run live cattle.',
+    icon: 'clock',
   },
   {
     title: 'Compatibility',
     text: 'Works with any tow-behind dummy currently on the market.',
+    icon: 'link',
   },
   {
     title: 'Mastery',
     text: 'Advance the skill level and partnership of both the ropers and their horses.',
+    icon: 'target',
   },
 ]
 
@@ -152,9 +154,55 @@ const contactDetails = [
   { label: 'Email', value: 'dorianbundy@gmail.com' },
 ]
 
+const actionVideos = [
+  {
+    id: 'iQFtwo7aM9s',
+    title: 'Rope Hog action video 1',
+  },
+  {
+    id: 'eCgRkLdd2wk',
+    title: 'Rope Hog action video 2',
+  },
+  {
+    id: 'oB5JFzKaItE',
+    title: 'Rope Hog action video 3',
+  },
+  {
+    id: 'oMOXHFbIC-4',
+    title: 'Rope Hog action video 4',
+  },
+]
+
 function getCurrentPage() {
   const hash = window.location.hash.replace('#', '')
   return pages.some((page) => page.id === hash) ? hash : 'home'
+}
+
+function HighlightIcon({ type }) {
+  const icons = {
+    clock: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M12 7.5v5l3.5 2" />
+      </svg>
+    ),
+    link: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9.5 14.5 7.4 16.6a3 3 0 1 1-4.2-4.2l3-3a3 3 0 0 1 4.2 0" />
+        <path d="m14.5 9.5 2.1-2.1a3 3 0 1 1 4.2 4.2l-3 3a3 3 0 0 1-4.2 0" />
+        <path d="m8.5 15.5 7-7" />
+      </svg>
+    ),
+    target: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.5" />
+        <circle cx="12" cy="12" r="4.5" />
+        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  }
+
+  return <span className="highlight-icon">{icons[type]}</span>
 }
 
 function App() {
@@ -173,30 +221,45 @@ function App() {
     home: (
       <>
         <section className="hero-section section">
-          <div className="eyebrow">Start roping today</div>
-          <div className="hero-grid">
-            <div className="hero-copy">
-              <h1>Make your time count.</h1>
-              <p className="lead">
-                A remote controlled rail system designed to bring your roping skills to
-                the next level and train solid horses.
-              </p>
-              <div className="cta-row">
-                <a className="button button-primary" href="#contact">
-                  Get Started
-                </a>
-                <a className="button button-secondary" href="#pricing">
-                  View Pricing
-                </a>
-              </div>
-            </div>
-            <div className="hero-visual">
-              <div className="image-frame">
-                <img src={heroImage} alt="Rope Hog training track system" />
+          <div className="hero-stack">
+            <div className="hero-stage">
+              <video
+                className="hero-video"
+                autoPlay
+                loop
+                muted
+                playsInline
+                aria-hidden="true"
+              >
+                <source src="/herovideo.mp4" type="video/mp4" />
+              </video>
+              <div className="hero-overlay">
+                <div className="eyebrow">Start roping today</div>
+                <img className="hero-logo" src="/ropehoglogo.png" alt="Rope Hog" />
+                <div className="hero-copy">
+                  <h1>Make your time count.</h1>
+                  <p className="lead">
+                    A remote controlled rail system designed to bring your roping skills
+                    to the next level and train solid horses.
+                  </p>
+                  <div className="cta-row">
+                    <a className="button button-primary" href="#contact">
+                      Get Started
+                    </a>
+                    <a className="button button-secondary button-light" href="#pricing">
+                      View Pricing
+                    </a>
+                  </div>
+                </div>
               </div>
               <div className="stat-card">
                 <strong>Practice without assistance</strong>
                 <span>Just you and your horse, any time day or night, over and over again.</span>
+              </div>
+            </div>
+            <div className="hero-photo-row">
+              <div className="image-frame featured-shot">
+                <img src="/image1.png" alt="Rope Hog track system installed outdoors" />
               </div>
             </div>
           </div>
@@ -210,6 +273,7 @@ function App() {
           <div className="card-grid three-up">
             {homeHighlights.map((item) => (
               <article className="info-card" key={item.title}>
+                <HighlightIcon type={item.icon} />
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
@@ -217,8 +281,8 @@ function App() {
           </div>
         </section>
 
-        <section className="section split-section accent-panel">
-          <div>
+        <section className="section split-section accent-panel event-section">
+          <div className="event-copy">
             <p className="kicker">Designed for every event</p>
             <h2>Train smarter with the dummies you already use.</h2>
             <p>
@@ -227,7 +291,7 @@ function App() {
               elevate the skills of every roper who trains with us.
             </p>
           </div>
-          <div>
+          <div className="event-list">
             <ul className="feature-list">
               {dummyCompatibility.map((item) => (
                 <li key={item}>{item}</li>
@@ -239,28 +303,61 @@ function App() {
           </div>
         </section>
 
-        <section className="section split-section">
-          <div className="info-card">
-            <p className="kicker">Modular track system</p>
-            <h3>Standard 70x50 rectangle</h3>
-            <p>
-              Our modular track system is available in a standard 70x50 rectangle, and
-              additional track is available so you can customize your setup for your
-              event or training style.
+        <section className="section split-section detail-grid">
+          <div className="detail-stack">
+            <div className="info-card detail-card detail-card-image3">
+              <div className="detail-card-overlay">
+                <p className="kicker">See details</p>
+                <h3>Want to know more about the Rope Hog track system?</h3>
+                <p>
+                  Explore pricing, compare standard and custom options, and contact the team
+                  for a setup built around the way you train.
+                </p>
+                <div className="cta-row">
+                  <a className="button button-primary" href="#pricing">
+                    See Details Here
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="detail-stack">
+            <div className="info-card detail-card detail-card-image2">
+              <div className="detail-card-overlay">
+              <p className="kicker">Modular track system</p>
+              <h3>Standard 70x50 rectangle</h3>
+              <p>
+                Our modular track system is available in a standard 70x50 rectangle, and
+                additional track is available so you can customize your setup for your
+                event or training style.
+              </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section page-shell">
+          <div className="section-heading narrow">
+            <p className="kicker">In action</p>
+            <h2>See the Rope Hog in action.</h2>
+            <p className="lead">
+              Real product footage helps visitors understand the pace, motion, and
+              training flow of the system.
             </p>
           </div>
-          <div className="info-card">
-            <p className="kicker">See details</p>
-            <h3>Want to know more about the Rope Hog track system?</h3>
-            <p>
-              Explore pricing, compare standard and custom options, and contact the team
-              for a setup built around the way you train.
-            </p>
-            <div className="cta-row">
-              <a className="button button-primary" href="#pricing">
-                See Details Here
-              </a>
-            </div>
+          <div className="video-grid">
+            {actionVideos.map((video) => (
+              <div className="video-embed" key={video.id}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.id}`}
+                  title={video.title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            ))}
           </div>
         </section>
 
@@ -484,7 +581,7 @@ function App() {
     <div className="site-shell">
       <header className="site-header">
         <a className="brand" href="#home" onClick={() => setCurrentPage('home')}>
-          <span className="brand-mark">RH</span>
+          <img className="brand-logo" src="/ropehoglogo.png" alt="Rope Hog logo" />
           <span className="brand-text">
             <strong>Rope Hog</strong>
             <small>Remote controlled roping track system</small>
@@ -510,6 +607,7 @@ function App() {
       <main>{pageContent[currentPage]}</main>
 
       <footer className="site-footer">
+        <img className="footer-logo" src="/ropehoglogo.png" alt="Rope Hog logo" />
         <div className="footer-meta">
           <p>&copy; 2024 RopeHogLLC, All rights reserved.</p>
           <div className="footer-links">

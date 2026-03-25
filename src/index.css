@@ -1,21 +1,21 @@
 :root {
-  --bg: #efe5d6;
-  --surface: #f9f4ec;
-  --surface-alt: rgba(34, 61, 64, 0.08);
-  --border: rgba(34, 61, 64, 0.12);
-  --border-strong: rgba(34, 61, 64, 0.22);
-  --ink: #425350;
-  --ink-soft: #667774;
-  --ink-strong: #193234;
-  --accent: #d78235;
-  --accent-deep: #8b4d1a;
+  --bg: #efe2d4;
+  --surface: #faf4ee;
+  --surface-alt: rgba(106, 42, 39, 0.08);
+  --border: rgba(106, 42, 39, 0.12);
+  --border-strong: rgba(106, 42, 39, 0.22);
+  --ink: #5a4843;
+  --ink-soft: #87695d;
+  --ink-strong: #4f2321;
+  --accent: #a3784c;
+  --accent-deep: #6a2a27;
   --font-body: 'Avenir Next', 'Segoe UI', sans-serif;
   --font-heading: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
 
   color: var(--ink);
   background:
-    radial-gradient(circle at top, rgba(255, 250, 239, 0.72), transparent 36%),
-    linear-gradient(180deg, #e7dbc7 0%, #efe5d6 30%, #e3d7c5 100%);
+    radial-gradient(circle at top, rgba(255, 247, 239, 0.78), transparent 36%),
+    linear-gradient(180deg, #eadbcd 0%, #efe2d4 30%, #e6d4c4 100%);
   font-family: var(--font-body);
   font-size: 17px;
   line-height: 1.6;
