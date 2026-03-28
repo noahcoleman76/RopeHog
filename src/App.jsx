@@ -54,32 +54,32 @@ const missionPillars = [
 const reviews = [
   {
     name: 'Lari Dee Guy',
-    image: '/reviews/lari-dee-guy.jpeg',
+    image: 'reviews/lari-dee-guy.jpeg',
     videoId: 'Ck4tdY8ssP8',
   },
   {
     name: 'Cody Demers',
-    image: '/reviews/cody-demers.jpeg',
+    image: 'reviews/cody-demers.jpeg',
     videoId: 'GxgaD_8lPzw',
   },
   {
     name: 'Steve Birnie',
-    image: '/reviews/steve-birnie.jpeg',
+    image: 'reviews/steve-birnie.jpeg',
     videoId: 'Pq3zXhjI8dc',
   },
   {
     name: 'Larry McGrady',
-    image: '/reviews/lari-mcgrady.jpeg',
+    image: 'reviews/lari-mcgrady.jpeg',
     videoId: 'fuFypvi0hPA',
   },
   {
     name: 'Hope Thompson',
-    image: '/reviews/hope-thompson.jpeg',
+    image: 'reviews/hope-thompson.jpeg',
     videoId: 'PMgNknTr7nA',
   },
   {
     name: 'Ty Yost',
-    image: '/reviews/ty-yost.jpeg',
+    image: 'reviews/ty-yost.jpeg',
     videoId: 'ysVrD6pfOtE',
   },
 ]
@@ -203,6 +203,10 @@ function getCurrentPage() {
   return pages.some((page) => page.id === hash) ? hash : 'home'
 }
 
+function assetUrl(path) {
+  return `${import.meta.env.BASE_URL}${path}`
+}
+
 function HighlightIcon({ type }) {
   const icons = {
     clock: (
@@ -273,11 +277,11 @@ function App() {
                 playsInline
                 aria-hidden="true"
               >
-                <source src="/herovideo.mp4" type="video/mp4" />
+                <source src={assetUrl('herovideo.mp4')} type="video/mp4" />
               </video>
               <div className="hero-overlay">
                 <div className="eyebrow">Start roping today</div>
-                <img className="hero-logo" src="/ropehoglogo.png" alt="Rope Hog" />
+                <img className="hero-logo" src={assetUrl('ropehoglogo.png')} alt="Rope Hog" />
                 <div className="hero-copy">
                   <h1>Make your time count.</h1>
                   <p className="lead">
@@ -301,7 +305,7 @@ function App() {
             </div>
             <div className="hero-photo-row">
               <div className="image-frame featured-shot">
-                <img src="/image1.png" alt="Rope Hog track system installed outdoors" />
+                <img src={assetUrl('image1.png')} alt="Rope Hog track system installed outdoors" />
               </div>
             </div>
           </div>
@@ -334,7 +338,7 @@ function App() {
               </p>
             </div>
             <div className="press-media">
-              <img src="/abcpicture.png" alt="ABC4 article preview about Rope Hog" />
+              <img src={assetUrl('abcpicture.png')} alt="ABC4 article preview about Rope Hog" />
               <a
                 className="button button-primary press-button"
                 href="https://www.abc4.com/news/southern-utah/local-cowboy-innovation-roping-tool/"
@@ -614,7 +618,7 @@ function App() {
             {reviews.map((review) => (
               <article className="review-card" key={review.name}>
                 <div className="review-media">
-                  <img src={review.image} alt={`${review.name} review`} />
+                  <img src={assetUrl(review.image)} alt={`${review.name} review`} />
                   <button
                     className="review-play"
                     type="button"
@@ -779,7 +783,7 @@ function App() {
       <div className="site-shell">
         <header className="site-header">
         <a className="brand" href="#home" onClick={() => setCurrentPage('home')}>
-          <img className="brand-logo" src="/ropehoglogo.png" alt="Rope Hog logo" />
+          <img className="brand-logo" src={assetUrl('ropehoglogo.png')} alt="Rope Hog logo" />
           <span className="brand-text">
             <strong>Rope Hog</strong>
             <small>Remote controlled roping track system</small>
@@ -805,7 +809,7 @@ function App() {
         <main>{pageContent[currentPage]}</main>
 
         <footer className="site-footer">
-          <img className="footer-logo" src="/ropehoglogo.png" alt="Rope Hog logo" />
+          <img className="footer-logo" src={assetUrl('ropehoglogo.png')} alt="Rope Hog logo" />
           <div className="footer-meta">
             <p>&copy; {currentYear} RopeHog LLC, All rights reserved.</p>
             <div className="footer-links">
