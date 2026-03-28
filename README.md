@@ -23,75 +23,47 @@ This project is configured with a relative Vite base (`base: './'`) so it can ru
 
 Because the site uses hash-based navigation (`#home`, `#about`, etc.), it is safe to host on GitHub Pages without additional SPA redirect handling.
 
-### Deploy with GitHub Actions
+### Classic `gh-pages` branch flow
 
 1. Push this project to GitHub.
 2. In the repository, open `Settings` -> `Pages`.
-3. Under `Build and deployment`, choose `GitHub Actions`.
-4. Add a workflow like this at `.github/workflows/deploy.yml`:
+3. Under `Build and deployment`, choose:
+   Source: `Deploy from a branch`
+4. Select:
+   Branch: `gh-pages`
+   Folder: `/ (root)`
+5. Save.
 
-```yml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
-
-### Manual deploy
-
-If you prefer a manual flow, build locally with:
+This project includes these scripts:
 
 ```bash
 npm run build
+npm run deploy
 ```
 
-Then publish the contents of `dist/` to your GitHub Pages branch or deployment target.
+`npm run deploy` will:
+
+1. Build the production site into `dist/`
+2. Publish `dist/` to the `gh-pages` branch
+
+### First deploy
+
+After your repo is connected to GitHub, run:
+
+```bash
+npm install
+npm run deploy
+```
+
+If the `gh-pages` branch does not exist yet, the deploy command will create it.
+
+### Ongoing deploys
+
+Any time you want to publish a new version:
+
+```bash
+npm run deploy
+```
 
 ## Notes
 
