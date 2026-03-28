@@ -52,12 +52,36 @@ const missionPillars = [
 ]
 
 const reviews = [
-  'Lari Dee Guy',
-  'Cody Demers',
-  'Steve Birnie',
-  'Lari McGrady',
-  'Hope Thompson',
-  'Ty Yost',
+  {
+    name: 'Lari Dee Guy',
+    image: '/reviews/lari-dee-guy.jpeg',
+    videoId: 'Ck4tdY8ssP8',
+  },
+  {
+    name: 'Cody Demers',
+    image: '/reviews/cody-demers.jpeg',
+    videoId: 'GxgaD_8lPzw',
+  },
+  {
+    name: 'Steve Birnie',
+    image: '/reviews/steve-birnie.jpeg',
+    videoId: 'Pq3zXhjI8dc',
+  },
+  {
+    name: 'Larry McGrady',
+    image: '/reviews/lari-mcgrady.jpeg',
+    videoId: 'fuFypvi0hPA',
+  },
+  {
+    name: 'Hope Thompson',
+    image: '/reviews/hope-thompson.jpeg',
+    videoId: 'PMgNknTr7nA',
+  },
+  {
+    name: 'Ty Yost',
+    image: '/reviews/ty-yost.jpeg',
+    videoId: 'ysVrD6pfOtE',
+  },
 ]
 
 const pricingTiers = [
@@ -77,10 +101,10 @@ const pricingTiers = [
   {
     name: 'Rope Hog - Custom Track',
     price: 'Call',
-    suffix: 'for details',
-    description: 'Additional pieces can be purchased to add to your track system.',
+    suffix: 'For Details',
+    description: 'Additional pieces can be added to expand your track system.',
     features: [
-      'Delivery and set up by Rope Hog team member (optional)',
+      'Delivery and setup by a Rope Hog team member (optional)',
       'Custom size track',
       'Custom pricing',
     ],
@@ -96,7 +120,7 @@ const faqs = [
   {
     question: 'Can you practice by yourself?',
     answer:
-      'Yes. This is what makes the Rope Hog so effective. What would take at least 2 other people and hours of time can be done with one person and 45 minutes.',
+      'Yes. That is what makes Rope Hog so effective. What would normally take extra help and hours of time can be done by one person in a fraction of the time.',
   },
   {
     question: 'Can the Rope Hog be used to train horses?',
@@ -114,31 +138,16 @@ const faqs = [
   },
 ]
 
-const galleryItems = [
-  {
-    title: 'Solo practice runs',
-    text: 'Train day or night without needing extra help to keep the session moving.',
-  },
-  {
-    title: 'Horse development',
-    text: 'Use steady repetition to build confident horses and cleaner timing.',
-  },
-  {
-    title: 'Backyard setup',
-    text: 'A modular system designed to fit a standard 70x50 rectangle.',
-  },
-  {
-    title: 'Event flexibility',
-    text: 'Train team roping, heading, heeling, calf roping, and breakaway with one system.',
-  },
-  {
-    title: 'Tow-dummy compatible',
-    text: 'Pull the dummies you already use instead of being locked into one brand.',
-  },
-  {
-    title: 'Remote operation',
-    text: 'Control pace and repetition with a key fob while the rail system guides the track.',
-  },
+const galleryVideos = [
+  { id: '_DqoNvUtYpc', title: 'Rope Hog gallery video 1' },
+  { id: 'WVpc8mIin6M', title: 'Rope Hog gallery video 2' },
+  { id: 'tMWOapIZXkQ', title: 'Rope Hog gallery video 3' },
+  { id: 'jXKXpPJQjSQ', title: 'Rope Hog gallery video 4' },
+  { id: 'cpjtn5nlz7o', title: 'Rope Hog gallery video 5' },
+  { id: 'riVt94rPnHU', title: 'Rope Hog gallery video 6' },
+  { id: 'ZSkENmzRzC4', title: 'Rope Hog gallery video 7' },
+  { id: 'UV5Xhq_Zoww', title: 'Rope Hog gallery video 8' },
+  { id: 'Sa8aoZnh5S0', title: 'Rope Hog gallery video 9' },
 ]
 
 const footerLinks = [
@@ -149,9 +158,9 @@ const footerLinks = [
 ]
 
 const contactDetails = [
-  { label: 'Sales', value: '(801) 400-5584' },
-  { label: 'Support', value: '(801) 592-2579' },
-  { label: 'Email', value: 'dorianbundy@gmail.com' },
+  { label: 'Sales', value: '(801) 400-5584', href: 'tel:+18014005584' },
+  { label: 'Support', value: '(801) 592-2579', href: 'tel:+18015922579' },
+  { label: 'Email', value: 'dorianbundy@gmail.com', href: 'mailto:dorianbundy@gmail.com' },
 ]
 
 const actionVideos = [
@@ -170,6 +179,22 @@ const actionVideos = [
   {
     id: 'oMOXHFbIC-4',
     title: 'Rope Hog action video 4',
+  },
+]
+
+const aboutVideos = [
+  {
+    id: 'GVaCd5_9PIQ',
+    title: 'Rope Hog product overview video',
+    kicker: 'See the product',
+    heading: 'Watch the system in use.',
+  },
+  {
+    id: 'Tb7CHoyBb5E',
+    title: 'Podcast episode about the future of roping',
+    kicker: 'Future of roping',
+    heading: 'Hear the bigger conversation around where the sport is headed.',
+    text: 'This conversation explores innovation, training, and how technology is shaping modern roping.',
   },
 ]
 
@@ -207,6 +232,8 @@ function HighlightIcon({ type }) {
 
 function App() {
   const [currentPage, setCurrentPage] = useState(getCurrentPage)
+  const [activeReview, setActiveReview] = useState(null)
+  const currentYear = new Date().getFullYear()
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -216,6 +243,21 @@ function App() {
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
+
+  useEffect(() => {
+    if (!activeReview) {
+      return undefined
+    }
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setActiveReview(null)
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [activeReview])
 
   const pageContent = {
     home: (
@@ -281,6 +323,80 @@ function App() {
           </div>
         </section>
 
+        <section className="section">
+          <div className="press-panel">
+            <div className="press-copy">
+              <p className="kicker">See Rope Hog In The Press</p>
+              <h2>ABC4 recently featured Rope Hog and the story behind the system.</h2>
+              <p>
+                Read the ABC4 feature on the innovation behind Rope Hog and the impact
+                it is making in the roping world.
+              </p>
+            </div>
+            <div className="press-media">
+              <img src="/abcpicture.png" alt="ABC4 article preview about Rope Hog" />
+              <a
+                className="button button-primary press-button"
+                href="https://www.abc4.com/news/southern-utah/local-cowboy-innovation-roping-tool/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Read The ABC4 Article
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="release-panel">
+            <div className="release-copy">
+              <p className="kicker">Partnership Release</p>
+              <h2>THE ARENA @ Richards Ranch announced a new partnership with Rope Hog, LLC.</h2>
+              <p className="release-date">January 12, 2026</p>
+              <p>
+                THE ARENA @ Richards Ranch in Jacksboro, Texas announced new partnership
+                initiatives for its inaugural 2026 season, including practice sessions
+                sponsored by Rope Hog and daily access to a permanent demo unit.
+              </p>
+              <p>
+                Visitors heading to the 2026 USTRC Finals in Fort Worth are encouraged
+                to book private practice time, stay the week, and use the facility to
+                keep both ropers and horses sharp.
+              </p>
+            </div>
+            <div className="release-details">
+              <div className="info-card release-card">
+                <p className="kicker">Highlights</p>
+                <ul className="feature-list">
+                  <li>Tuesday and Thursday practice sessions sponsored by Rope Hog, LLC.</li>
+                  <li>Daily access to a permanent demo unit with multiple training sled options.</li>
+                  <li>Pre-orders available with shipping options for buyers nationwide.</li>
+                </ul>
+              </div>
+              <div className="info-card release-card">
+                <p className="kicker">Richards Ranch</p>
+                <p>
+                  For updates and reservations, visit{' '}
+                  <a href="https://www.rr3tx.com" target="_blank" rel="noreferrer">
+                    RR3TX.com
+                  </a>{' '}
+                  or call{' '}
+                  <a href="tel:+18176941286">
+                    817-694-1286
+                  </a>
+                  .
+                </p>
+                <p className="release-contacts">
+                  Sonny Miller: <a href="mailto:Sonny@RR3TX.com">Sonny@RR3TX.com</a>
+                </p>
+                <p className="release-contacts">
+                  Kinzee Shull: <a href="mailto:Kinzee@RR3TX.com">Kinzee@RR3TX.com</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="section split-section accent-panel event-section">
           <div className="event-copy">
             <p className="kicker">Designed for every event</p>
@@ -307,15 +423,15 @@ function App() {
           <div className="detail-stack">
             <div className="info-card detail-card detail-card-image3">
               <div className="detail-card-overlay">
-                <p className="kicker">See details</p>
+                <p className="kicker">Explore pricing</p>
                 <h3>Want to know more about the Rope Hog track system?</h3>
                 <p>
-                  Explore pricing, compare standard and custom options, and contact the team
-                  for a setup built around the way you train.
+                  Compare standard and custom options, then contact the team to find the
+                  right setup for the way you train.
                 </p>
                 <div className="cta-row">
                   <a className="button button-primary" href="#pricing">
-                    See Details Here
+                    View Pricing
                   </a>
                 </div>
               </div>
@@ -361,6 +477,42 @@ function App() {
           </div>
         </section>
 
+        <section className="section page-shell">
+          <div className="about-video-layout">
+            <div className="story-block home-feature-card">
+              <div>
+                <p className="kicker">Featured Interview</p>
+                <h2>Rope Hog was featured on the Cowboy State Daily Show.</h2>
+              </div>
+              <p>
+                Watch Dorian Bundy talk about Rope Hog on Cowboy State Daily. The video
+                begins at the interview segment and highlights the story behind the
+                product, the training concept, and where the business is headed.
+              </p>
+              <div className="cta-row">
+                <a
+                  className="button button-primary"
+                  href="https://www.youtube.com/live/2XrFdw_Kbfk"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Watch On YouTube
+                </a>
+              </div>
+            </div>
+            <div className="video-embed">
+              <iframe
+                src="https://www.youtube.com/embed/2XrFdw_Kbfk?start=3985&end=4765"
+                title="Cowboy State Daily interview with Dorian Bundy"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </section>
+
         <section className="section section-cta">
           <div className="cta-banner">
             <div>
@@ -388,6 +540,20 @@ function App() {
               Just you and your horse, any time day or night, over and over again
               through remote operation.
             </p>
+          </div>
+          <div className="story-block about-video-heading">
+            <p className="kicker">{aboutVideos[0].kicker}</p>
+            <h2>{aboutVideos[0].heading}</h2>
+          </div>
+          <div className="video-embed about-video-full">
+            <iframe
+              src={`https://www.youtube.com/embed/${aboutVideos[0].id}`}
+              title={aboutVideos[0].title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
           </div>
           <div className="story-block">
             <div>
@@ -418,14 +584,52 @@ function App() {
         </section>
 
         <section className="section page-shell">
+          <div className="about-video-layout about-video-layout-reverse">
+            <div className="video-embed">
+              <iframe
+                src={`https://www.youtube.com/embed/${aboutVideos[1].id}`}
+                title={aboutVideos[1].title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+            <div className="story-block">
+              <div>
+                <p className="kicker">{aboutVideos[1].kicker}</p>
+                <h2>{aboutVideos[1].heading}</h2>
+              </div>
+              <p>{aboutVideos[1].text}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="section page-shell">
           <div className="section-heading narrow">
             <p className="kicker">Customer reviews</p>
             <h2>See our customers&apos; reviews.</h2>
           </div>
           <div className="review-grid">
-            {reviews.map((name) => (
-              <article className="review-card" key={name}>
-                <strong>{name}</strong>
+            {reviews.map((review) => (
+              <article className="review-card" key={review.name}>
+                <div className="review-media">
+                  <img src={review.image} alt={`${review.name} review`} />
+                  <button
+                    className="review-play"
+                    type="button"
+                    onClick={() => setActiveReview(review)}
+                    aria-label={`Play ${review.name} review video`}
+                  >
+                    <span className="review-play-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M8 6.5v11l9-5.5-9-5.5Z" />
+                      </svg>
+                    </span>
+                    <span>Play Review</span>
+                  </button>
+                </div>
+                <strong>{review.name}</strong>
               </article>
             ))}
           </div>
@@ -454,22 +658,20 @@ function App() {
           <div className="card-grid pricing-grid">
             {pricingTiers.map((tier) => (
               <article className="price-card" key={tier.name}>
-                <div className="price-header">
-                  <div>
-                    <h3>{tier.name}</h3>
-                    <p>{tier.description}</p>
-                  </div>
-                  <div className="price-tag-wrap">
-                    <div className="price-tag">{tier.price}</div>
-                    <span className="price-suffix">{tier.suffix}</span>
-                  </div>
+                <div>
+                  <h3>{tier.name}</h3>
+                  <p>{tier.description}</p>
                 </div>
                 <ul className="feature-list compact">
                   {tier.features.map((feature) => (
                     <li key={feature}>{feature}</li>
                   ))}
                 </ul>
-                <div className="cta-row">
+                <div className="price-card-footer">
+                  <div className="price-tag-wrap">
+                    <div className="price-tag">{tier.price}</div>
+                    <span className="price-suffix">{tier.suffix}</span>
+                  </div>
                   <a className="button button-primary" href="#contact">
                     Get Started
                   </a>
@@ -513,73 +715,69 @@ function App() {
           <p className="kicker">Gallery</p>
           <h1>See the Rope Hog in action.</h1>
           <p className="lead">
-            This page is structured to showcase the product in motion, training setups,
-            horse development, and event-specific practice sessions.
+            A collection of Rope Hog footage showing product motion, training setups,
+            and real use in the arena.
           </p>
         </div>
-        <div className="gallery-grid">
-          {galleryItems.map((item, index) => (
-            <article className="gallery-card" key={item.title}>
-              <div className={`gallery-art gallery-art-${(index % 3) + 1}`}>
-                <span>{item.title}</span>
-              </div>
-              <div className="gallery-copy">
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </div>
-            </article>
+        <div className="gallery-video-grid">
+          {galleryVideos.map((video) => (
+            <div className="video-embed" key={video.id}>
+              <iframe
+                src={`https://www.youtube.com/embed/${video.id}`}
+                title={video.title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
           ))}
         </div>
       </section>
     ),
     contact: (
       <section className="section page-shell">
-        <div className="section-heading narrow">
+        <div className="section-heading narrow contact-heading">
           <p className="kicker">Contact</p>
-          <h1>Have a question for us? Go for it.</h1>
-          <p className="lead">Don&apos;t hesitate to call.</p>
+          <h1>Get in touch with Rope Hog.</h1>
+          <p className="lead">
+            Reach Rope Hog directly for sales questions, support, pricing, or setup
+            details.
+          </p>
         </div>
-        <div className="contact-layout">
-          <div className="info-card contact-card">
-            <h3>Reach Rope Hog</h3>
-            <ul className="contact-list">
+        <div className="contact-page-grid">
+          <div className="info-card contact-card contact-card-only">
+            <p className="kicker">Reach Rope Hog</p>
+            <ul className="contact-list contact-list-large">
               {contactDetails.map((detail) => (
                 <li key={detail.label}>
                   <span>{detail.label}</span>
-                  <strong>{detail.value}</strong>
+                  <strong>
+                    <a href={detail.href}>{detail.value}</a>
+                  </strong>
                 </li>
               ))}
             </ul>
           </div>
-          <form className="contact-form">
-            <label>
-              Name
-              <input type="text" name="name" placeholder="Your name" />
-            </label>
-            <label>
-              Email
-              <input type="email" name="email" placeholder="Your email" />
-            </label>
-            <label>
-              Tell us all about it
-              <textarea
-                name="details"
-                rows="6"
-                placeholder="Tell us about your questions, setup, and training goals."
-              />
-            </label>
-            <button className="button button-primary" type="submit">
-              Send Inquiry
-            </button>
-          </form>
+          <div className="story-block contact-side-note">
+            <div>
+              <p className="kicker">How to reach us</p>
+              <h2>Call for direct questions. Email for follow-up, pricing, and details.</h2>
+            </div>
+            <p>
+              If you are comparing systems, checking pricing, or figuring out what setup
+              fits your event, calling is the fastest way to get an answer.
+            </p>
+          </div>
         </div>
       </section>
     ),
   }
 
   return (
-    <div className="site-shell">
-      <header className="site-header">
+    <>
+      <div className="site-shell">
+        <header className="site-header">
         <a className="brand" href="#home" onClick={() => setCurrentPage('home')}>
           <img className="brand-logo" src="/ropehoglogo.png" alt="Rope Hog logo" />
           <span className="brand-text">
@@ -602,25 +800,64 @@ function App() {
             Get Started
           </a>
         </nav>
-      </header>
+        </header>
 
-      <main>{pageContent[currentPage]}</main>
+        <main>{pageContent[currentPage]}</main>
 
-      <footer className="site-footer">
-        <img className="footer-logo" src="/ropehoglogo.png" alt="Rope Hog logo" />
-        <div className="footer-meta">
-          <p>&copy; 2024 RopeHogLLC, All rights reserved.</p>
-          <div className="footer-links">
-            {footerLinks.map((link) => (
-              <a key={link.label} href={link.href} onClick={() => setCurrentPage(link.href.slice(1))}>
-                {link.label}
-              </a>
-            ))}
+        <footer className="site-footer">
+          <img className="footer-logo" src="/ropehoglogo.png" alt="Rope Hog logo" />
+          <div className="footer-meta">
+            <p>&copy; {currentYear} RopeHog LLC, All rights reserved.</p>
+            <div className="footer-links">
+              {footerLinks.map((link) => (
+                <a key={link.label} href={link.href} onClick={() => setCurrentPage(link.href.slice(1))}>
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+          <span>(801) 592-2579</span>
+        </footer>
+      </div>
+
+      {activeReview ? (
+        <div
+          className="modal-backdrop"
+          role="presentation"
+          onClick={() => setActiveReview(null)}
+        >
+          <div
+            className="modal-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="review-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="modal-header">
+              <h2 id="review-modal-title">{activeReview.name}</h2>
+              <button
+                className="modal-close"
+                type="button"
+                onClick={() => setActiveReview(null)}
+                aria-label="Close review video"
+              >
+                ×
+              </button>
+            </div>
+            <div className="video-embed modal-video">
+              <iframe
+                src={`https://www.youtube.com/embed/${activeReview.videoId}?autoplay=1`}
+                title={`${activeReview.name} review video`}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
           </div>
         </div>
-        <span>(801) 592-2579</span>
-      </footer>
-    </div>
+      ) : null}
+    </>
   )
 }
 
