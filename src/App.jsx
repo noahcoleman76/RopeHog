@@ -237,11 +237,13 @@ function HighlightIcon({ type }) {
 function App() {
   const [currentPage, setCurrentPage] = useState(getCurrentPage)
   const [activeReview, setActiveReview] = useState(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const currentYear = new Date().getFullYear()
 
   useEffect(() => {
     const handleHashChange = () => {
       setCurrentPage(getCurrentPage())
+      setIsMenuOpen(false)
     }
 
     window.addEventListener('hashchange', handleHashChange)
@@ -782,28 +784,61 @@ function App() {
     <>
       <div className="site-shell">
         <header className="site-header">
-        <a className="brand" href="#home" onClick={() => setCurrentPage('home')}>
-          <img className="brand-logo" src={assetUrl('ropehoglogo.png')} alt="Rope Hog logo" />
-          <span className="brand-text">
-            <strong>Rope Hog</strong>
-            <small>Remote controlled roping track system</small>
-          </span>
-        </a>
-        <nav className="site-nav" aria-label="Primary">
-          {pages.map((page) => (
-            <a
-              key={page.id}
-              href={`#${page.id}`}
-              className={currentPage === page.id ? 'active' : ''}
-              onClick={() => setCurrentPage(page.id)}
-            >
-              {page.label}
-            </a>
-          ))}
-          <a className="nav-cta" href="#contact" onClick={() => setCurrentPage('contact')}>
-            Get Started
+          <a
+            className="brand"
+            href="#home"
+            onClick={() => {
+              setCurrentPage('home')
+              setIsMenuOpen(false)
+            }}
+          >
+            <img className="brand-logo" src={assetUrl('ropehoglogo.png')} alt="Rope Hog logo" />
+            <span className="brand-text">
+              <strong>Rope Hog</strong>
+              <small>Remote controlled roping track system</small>
+            </span>
           </a>
-        </nav>
+          <button
+            className={`menu-toggle ${isMenuOpen ? 'open' : ''}`}
+            type="button"
+            aria-expanded={isMenuOpen}
+            aria-controls="primary-navigation"
+            aria-label="Toggle navigation menu"
+            onClick={() => setIsMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+          <nav
+            id="primary-navigation"
+            className={`site-nav ${isMenuOpen ? 'open' : ''}`}
+            aria-label="Primary"
+          >
+            {pages.map((page) => (
+              <a
+                key={page.id}
+                href={`#${page.id}`}
+                className={currentPage === page.id ? 'active' : ''}
+                onClick={() => {
+                  setCurrentPage(page.id)
+                  setIsMenuOpen(false)
+                }}
+              >
+                {page.label}
+              </a>
+            ))}
+            <a
+              className="nav-cta"
+              href="#contact"
+              onClick={() => {
+                setCurrentPage('contact')
+                setIsMenuOpen(false)
+              }}
+            >
+              Get Started
+            </a>
+          </nav>
         </header>
 
         <main>{pageContent[currentPage]}</main>
